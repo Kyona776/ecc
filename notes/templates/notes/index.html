@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="" href="">
+    <title>{% block title %}noteS{% endblock %}</title>
+</head>
+<body>
+    <div id="serach_note">
+        <form method='get'　action='{% url "notes:index" %}' >
+            {{ search_form }}
+            <input type='submit' value="search">
+        </form>
+        {% if result %}
+        <ul>
+            {{ result }}
+            {% for note in result %}
+            <li>{{ note.note_title }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <br><bl>no hits</bl>
+        {% endif %}
+    </div>
+    <div id="list_of_notes">
+        {% if latest_notes_list %}
+        <ul>
+            {% for note in latest_notes_list %}
+            <li><a href="{% url 'notes:detail' note.id %}">{{ note.note_title }}</a></li>
+            <a>category:{{ note.categories }}</a>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <ul><li>the note have not created yet</li></ul>
+        {% endif %}
+    </div>
+    <div id="create_new_note">
+        <a href="{% url 'notes:create' %}">Create　New a Note</a>
+    </div>
+    <div id="neo4j_link">
+        <a href= {{ neo4j_console }} >neo4j console</a>
+    </div>
+    <div id='category'>
+        <a href = "{% url 'notes:category_main' %}">Category</a>
+    </div>
+</body>
+</html>

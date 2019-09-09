@@ -1,0 +1,5 @@
+<form method="POST" action='{% url "notes:category_create" %}'>
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <br><input type='submit' value='Create'>
+</form>

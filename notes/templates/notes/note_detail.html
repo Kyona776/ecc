@@ -1,0 +1,11 @@
+<body>
+    <h1>title:{{ note.note_title }}</h1>
+    <li>content:{{ note.note_content }}</li>
+    <li>pub_date{{ note.pub_date }}</li>
+    <li>id:{{ note.id }}</li>
+    <form method="post" action="{% url 'notes:detail' note.id %}">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="update">
+    </form>
+</body>
