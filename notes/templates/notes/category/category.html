@@ -16,11 +16,6 @@
                 }
             </style>
         <!--script type="text/javascript" src="/Users/kyona/node_modules/neovis.js/dist/neovis.js"></script-->
-        <script src="https://cdn.neo4jlabs.com/neovis.js/v1.1.0/neovis.js"></script>
-        <script src="../../../sample/nodemenu/cytoscape-cxtmenu.js"></script>
-        <script>
-            
-        </script>
         <!--script type="text/javascript">
             var viz;
             function draw() {
@@ -62,7 +57,7 @@
         <li><a href="{% url 'notes:category_create' %}">create category</a></li>
     </body-->
     <body>
-        <script>
+        <!---script>
             nodes = [
                 {% for node in categories %}
                     {
@@ -86,7 +81,7 @@
                 for (let node of nodes)
                     {source:node.links_from, target:node, left:, right:}
             ];
-        </script>
+        </script-->
     </body>
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="https://unpkg.com/neo4j-driver"></script>

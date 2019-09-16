@@ -3,9 +3,10 @@
 
 
 var driver = new neo4j.v1.driver(
-  'http://127.0.0.0:7687',
+  "bolt://neo4j:test@localhost:7687",
   neo4j.v1.auth.basic('', '')
 );
+
 
 // set up initial  and links
 //  - nodes are known by 'id', not by index in array.
@@ -14,6 +15,7 @@ var driver = new neo4j.v1.driver(
 // maybe should initialize nodes through node.js and js driver   
 
 // ノードはidとreflexive の設定　lsastId の更新　links
+
 
 //const nodes = [
 //  { id: 0, reflexive: false },
@@ -25,25 +27,35 @@ var driver = new neo4j.v1.driver(
 //  { source: nodes[0], target: nodes[1], left: false, right: true },
 //  { source: nodes[1], target: nodes[2], left: false, right: true }
 //];
-var session = driver.session()
-session
-  .run('MATCH (n:Categories) RETURN n')
-  .then(function(result) {
-    result.records.forEach(function (record){
-      console.log(record.get('n.category_name'));
-    });
-    session.close();
-  })
-  .catch(function (error) {
-    console.log(error)
-  });
-session.close()
 const nodes = [];
 let lastNodeId = 0;
 const links = [];
+var session = driver.session()
+session
+  .run('MATCH (n:Categories), l = (n:Categories)-[rel]->() RETURN n, l ')
+  .then( result=> {
+    result.records.forEach( record => {
+      console.log(record.get('n'));
+      let node = {
+        // id: uuid() uuid not in JSes6
+        id : lastNodeId++,  // possible to proceed push id num into dic then proceed addtion process by set ++ after variable
+        name: record.get('n').properties.category_name
+      };
+      nodes.push(node)
+      let link = {
+        start:record.get('l').start.properties.category_name,
+        end:record.get('l').end.properties.category_name
+      }
+      console.log(nodes[0],link);
+    });
+    session.close();
+    driver.close()
+  })
+  .catch( error => {
+    console.log(error);
+  });
 
 
-driver.close()
 
 
 // set up SVG for D3
@@ -57,8 +69,8 @@ driver.close()
 
 // django　とのデータ連携。: js の関数化と引数の入レルところ
 
-const width = 960;
-const height = 500;
+const width = window.outerWidth;
+const height = window.outerHeight;
 const colors = d3.scaleOrdinal(d3.schemeCategory10);
 
 const svg = d3.select('body')
@@ -316,7 +328,7 @@ function restart() {
     .attr('x', 0)
     .attr('y', 4)
     .attr('class', 'id')
-    .text((d) => d.id);// ここのd.idにneomodel のidを入れるようにする
+    .text((d) => d.category_name);// ここのd.idにneomodel のidを入れるようにする
 
   circle = g.merge(circle);
 
