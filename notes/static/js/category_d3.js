@@ -36,17 +36,19 @@ session
   .then( result=> {
     result.records.forEach( record => {
       console.log(record.get('n'));
-      let node = {
+      var node = {
         // id: uuid() uuid not in JSes6
         id : lastNodeId++,  // possible to proceed push id num into dic then proceed addtion process by set ++ after variable
-        name: record.get('n').properties.category_name
+        name: record.get('n').properties.category_name,
+        reflexive: record.get('n').properties.reflexive
+        
       };
-      nodes.push(node)
-      let link = {
+      nodes.push(node);
+      var link = {
         start:record.get('l').start.properties.category_name,
         end:record.get('l').end.properties.category_name
       }
-      console.log(nodes[0],link);
+      console.log(nodes,link);
     });
     session.close();
     driver.close()
@@ -54,6 +56,28 @@ session
   .catch( error => {
     console.log(error);
   });
+
+// confirm inside of nodes
+const wait = (sec) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, sec*1000);
+    //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
+  });
+};
+
+async function main() {
+  try {
+    await wait(10); // ここで10秒間止まります
+    console.log(nodes)
+    // ここに目的の処理を書きます。
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+main();
+
 
 
 
