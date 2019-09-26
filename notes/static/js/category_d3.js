@@ -1,3 +1,10 @@
+// おそらくノード上の処理は全てrestartが請け負ってる
+//　わからなかった部分の憶測として.on()で加えられた要素は一度加えられたらそのままhtml上で処理される？ javascript ではなのでrestart（）で
+// 上のとうりhtml にはeventrigger/handdler機能がある
+
+
+// 
+
 // neo4j setting and generate nodes and links datasets
 //var neo4j = require('neo4j-driver');
 
@@ -40,9 +47,15 @@ session
         // id: uuid() uuid not in JSes6
         id : lastNodeId++,  // possible to proceed push id num into dic then proceed addtion process by set ++ after variable
         name: record.get('n').properties.category_name,
-        reflexive: record.get('n').properties.reflexive
+        reflexive: ''
         
       };
+
+      if (record.get('n').properties.reflexive == 'false'){
+        node.reflexive = false;
+      }else{
+        node.reflexive = true;
+      }
       nodes.push(node);
       var link = {
         start:record.get('l').start.properties.category_name,
@@ -51,7 +64,8 @@ session
       console.log(nodes,link);
     });
     session.close();
-    driver.close()
+    driver.close();
+    restart();
   })
   .catch( error => {
     console.log(error);
@@ -347,24 +361,26 @@ function restart() {
       restart();
     });
 
-  // show node IDs
+  // show node name
   g.append('svg:text')
     .attr('x', 0)
     .attr('y', 4)
     .attr('class', 'id')
-    .text((d) => d.category_name);// ここのd.idにneomodel のidを入れるようにする
+    .text((d) => d.name);// nodeのなまえ, node:featre:name
 
   circle = g.merge(circle);
 
   // set the graph in motion
   force
     .nodes(nodes)
+    //.force('center', d3.forceCenter(width / 2, height / 2))
     .force('link').links(links);
 
   force.alphaTarget(0.3).restart();
 }
 
-function mousedown() {
+
+function mousedown() {　
   // because :active only works in WebKit?
   svg.classed('active', true);
 
@@ -498,7 +514,7 @@ function keyup() {
 }
 
 // app starts here
-svg.on('mousedown', mousedown)
+svg.on('mousedown', mousedown)  // mousedown : 
   .on('mousemove', mousemove)
   .on('mouseup', mouseup);
 d3.select(window)
