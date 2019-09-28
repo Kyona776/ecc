@@ -220,6 +220,10 @@ function tick() {
   circle.attr('transform', (d) => `translate(${d.x},${d.y})`);
 }
 
+function contextmenu(){
+  
+}
+
 // update graph (called when needed)
 function restart() {
   // path (link) group

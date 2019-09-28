@@ -95,8 +95,13 @@ var _require = __webpack_require__(3),
     getOffset = _require.getOffset;
 
 var cxtmenu = function cxtmenu(params) {
+  // assign : it seems like code set params as options if variable is given, otherwise sets defaults.
   var options = assign({}, defaults, params);
+  //　options : menuRadius, activePadding, zIndex, activePadding, itemColor, itemTextShadowColor
+
+  //var cy=this; is that create a const.
   var cy = this;
+  // container() doesn`t have any function or property
   var container = cy.container();
   var target = void 0;
 
@@ -677,7 +682,7 @@ module.exports = Object.assign != null ? Object.assign.bind(Object) : function (
 
 "use strict";
 
-
+// defaults
 var defaults = {
   menuRadius: 100, // the radius of the circular menu in pixels
   selector: 'node', // elements matching this Cytoscape.js selector will trigger cxtmenus
