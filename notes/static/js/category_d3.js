@@ -113,7 +113,10 @@ const colors = d3.scaleOrdinal(d3.schemeCategory10);
 
 const svg = d3.select('body')
   .append('svg')
-  .on('contextmenu', () => { d3.event.preventDefault(); })  // 右クリックを禁止してる
+  .on('contextmenu', () => {
+    d3.event.preventDefault();
+    cxtmenu;
+  })  // definition contextmenu = right click event
   .attr('width', width)
   .attr('height', height);
 
@@ -220,8 +223,8 @@ function tick() {
   circle.attr('transform', (d) => `translate(${d.x},${d.y})`);
 }
 
-function contextmenu(){
-  
+function cxtmenu(){
+
 }
 
 // update graph (called when needed)
@@ -384,6 +387,7 @@ function restart() {
 }
 
 
+// fix: need to conbine cxtmenu and create node with connecting neo4j
 function mousedown() {　
   // because :active only works in WebKit?
   svg.classed('active', true);
@@ -394,7 +398,7 @@ function mousedown() {　
 
   // insert new node at point
   const point = d3.mouse(this);
-  const node = { id: ++lastNodeId, reflexive: false, x: point[0], y: point[1] };
+  const node = { id: ++lastNodeId, reflexive: false, x: point[0], y: point[1] }; 
   nodes.push(node);
   // push() メソッドは、配列の末尾に 1 つ以上の要素を追加することができます。また戻り値として新しい配列の要素数を返します。
 

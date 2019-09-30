@@ -99,9 +99,9 @@ var cxtmenu = function cxtmenu(params) {
   var options = assign({}, defaults, params);
   //　options : menuRadius, activePadding, zIndex, activePadding, itemColor, itemTextShadowColor
 
-  //var cy=this; is that create a const.
+  // cy = cyptoscape
   var cy = this;
-  // container() doesn`t have any function or property
+  // cy.container() : get the html DOM elemnt in which the graph is visualised. a null value is returned if the instance is headless.
   var container = cy.container();
   var target = void 0;
 
@@ -734,6 +734,7 @@ var removeEles = function removeEles(query) {
     el.parentNode.removeChild(el);
   }
 };
+
 
 var setStyles = function setStyles(el, style) {
   var props = Object.keys(style);
