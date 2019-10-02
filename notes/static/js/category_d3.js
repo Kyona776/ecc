@@ -115,7 +115,11 @@ const svg = d3.select('body')
   .append('svg')
   .on('contextmenu', () => {
     d3.event.preventDefault();
-    cxtmenu;
+    var cxt = fucntion cxt(){
+      var cy = this; // return whole html tags
+      return cy
+    };
+
   })  // definition contextmenu = right click event
   .attr('width', width)
   .attr('height', height);

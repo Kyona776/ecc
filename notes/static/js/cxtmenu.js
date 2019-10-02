@@ -1,11 +1,9 @@
 // context menu function
 
-var d3 = require('d3');
+import d3 from 'd3';
 
-
-var cxtmenu = function cxtmenu(){
-
-}
+// mousedown
+// situations:body, node, links 
 
 var removeEles = function removeEles(query) {
     var ancestor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
@@ -79,7 +77,7 @@ var defaults = {
     spotlightPadding: 4, // extra spacing in pixels between the element and the spotlight
     minSpotlightRadius: 24, // the minimum radius in pixels of the spotlight
     maxSpotlightRadius: 38, // the maximum radius in pixels of the spotlight
-    openMenuEvents: 'cxttapstart taphold', // space-separated cytoscape events that will open the menu; only `cxttapstart` and/or `taphold` work here
+    openMenuEvents: 'mousedown', // set d3 event to open menu
     itemColor: 'white', // the colour of text in the command's content
     itemTextShadowColor: 'transparent', // the text shadow colour of the command's content
     zIndex: 9999, // the z-index of the ui div
@@ -103,12 +101,10 @@ var assign = Object.assign != null ? Object.assign.bind(Object) : function (tgt)
     return tgt;
 };
 
-var cxtmenu = function cxtmenu(setting) {
-    var options = assign({}, defaults, setting);
-
-    // need get html DOM element
-    
+var cxtmenu = function cxtmenu(param){
+  d3 = this;
+  options = Object.assign(defaults, params);
 
 }
 
-module.exports = cxtmenu();
+export default cxtmenu();

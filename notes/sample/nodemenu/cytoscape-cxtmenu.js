@@ -221,7 +221,7 @@ var cxtmenu = function cxtmenu(params) {
 
   function drawBg(rspotlight) {
     rspotlight = rspotlight !== undefined ? rspotlight : rs;
-
+    // c2d = createElement({ tag: 'canvas' }).getContext('2d')
     c2d.globalCompositeOperation = 'source-over';
 
     c2d.clearRect(0, 0, containerSize, containerSize);
@@ -377,6 +377,8 @@ var cxtmenu = function cxtmenu(params) {
       ctry = void 0,
       rs = void 0;
 
+  // binding cxt and core and set evnet handler
+  // selector : element
   var bindings = {
     on: function on(events, selector, fn) {
 
@@ -615,6 +617,7 @@ var cxtmenu = function cxtmenu(params) {
     });
   }
 
+  
   function removeEventListeners() {
     var handlers = data.handlers;
 
@@ -630,7 +633,8 @@ var cxtmenu = function cxtmenu(params) {
 
     window.removeEventListener('resize', updatePixelRatio);
   }
-
+  
+  // wrapper = cyptospace.Container(): Get the HTML DOM element in which the graph is visualised.
   function destroyInstance() {
     redrawing = false;
 
@@ -639,6 +643,8 @@ var cxtmenu = function cxtmenu(params) {
     wrapper.remove();
   }
 
+  // basically flow of program: 
+  // updatePixel() -> restart() -> addEventListeners() -> return {destory:...}
   addEventListeners();
 
   return {
