@@ -115,7 +115,7 @@ const svg = d3.select('body')
   .append('svg')
   .on('contextmenu', () => {
     d3.event.preventDefault();
-    var cxt = fucntion cxt(){
+    var cxt = function cxt(){
       var cy = this; // return whole html tags
       return cy
     };
