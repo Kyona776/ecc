@@ -107,9 +107,13 @@ var cxtmenu = function cxtmenu(params) {
   //　options : menuRadius, activePadding, zIndex, activePadding, itemColor, itemTextShadowColor
 
   // cy = cyptoscape
+  // in the html, cxtmenu is exported and overrid cyptoscape, then this return cyptoscape
+  // normarl this return global object, window object is global obj in browser
   var cy = this;
+  var d3;
+  var container = this; // expect DOM obj 
   // cy.container() : get the html DOM elemnt in which the graph is visualised. a null value is returned if the instance is headless.
-  var container = cy.container();
+  // var container = cy.container();
   var target = void 0;
 
   var data = {
