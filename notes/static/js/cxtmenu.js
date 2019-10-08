@@ -1,6 +1,6 @@
 // context menu function
 
-import d3 from 'd3';
+//import d3 from 'd3';
 
 // mousedown
 // situations:body, node, links 
@@ -101,7 +101,9 @@ var assign = Object.assign != null ? Object.assign.bind(Object) : function (tgt)
     return tgt;
 };
 
-var cxtmenu = function cxtmenu(params) {
+
+//var d3 = require('d3');
+export default function cxtmenu(params) {
   // assign : it seems like code set params as options if variable is given, otherwise sets defaults.
   var options = assign({}, defaults, params);
   //　options : menuRadius, activePadding, zIndex, activePadding, itemColor, itemTextShadowColor
@@ -110,7 +112,6 @@ var cxtmenu = function cxtmenu(params) {
   // in the html, cxtmenu is exported and overrid cyptoscape, then this return cyptoscape
   // normarl this return global object, window object is global obj in browser
   var cy = this;
-  var d3;
   var container = this; // expect DOM obj 
   // cy.container() : get the html DOM elemnt in which the graph is visualised. a null value is returned if the instance is headless.
   // var container = cy.container();
@@ -119,12 +120,13 @@ var cxtmenu = function cxtmenu(params) {
   var data = {
     options: options,
     handlers: [],
-    container: createElement({ class: 'cxtmenu' })
+    container: createElement({ class: 'cxtmenu' }) // create class 
   };
 
   var wrapper = data.container;
   var parent = createElement();
   var canvas = createElement({ tag: 'canvas' });
+  var svg = createElemnt({tag:'svg'});
   var commands = [];
   var c2d = canvas.getContext('2d');
   var r = options.menuRadius;
@@ -342,6 +344,7 @@ var cxtmenu = function cxtmenu(params) {
     c2d.globalCompositeOperation = 'source-over';
   }
 
+  // change to svg
   function updatePixelRatio() {
     var pxr = getPixelRatio();
     var w = containerSize;
@@ -657,6 +660,7 @@ var cxtmenu = function cxtmenu(params) {
   // basically flow of program: 
   // updatePixel() -> restart() -> addEventListeners() -> return {destory:...}
   addEventListeners();
+  console.log(container);
 
   return {
     destroy: function destroy() {
@@ -665,4 +669,3 @@ var cxtmenu = function cxtmenu(params) {
   };
 };
 
-export default cxtmenu();
