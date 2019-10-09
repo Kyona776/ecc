@@ -410,10 +410,11 @@ var cxtmenu = function cxtmenu(params, element) {
   // selector : element
   var bindings = {
     on: function on(events, selector, fn) {
+      // fn: function to apply to event
 
       var _fn = fn;
       if (selector === 'core') {
-        _fn = function _fn(e) {
+        _fn = function _fn(e) {  // e is event object contain many methods
           if (e.cyTarget === cy || e.target === cy) {
             // only if event target is directly core
             return fn.apply(this, [e]);
