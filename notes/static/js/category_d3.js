@@ -5,6 +5,8 @@
 // mousedown
 // situations:body, node, links 
 
+// need need alter all ECS2015 meth to d3 methods instead
+
 var removeEles = function removeEles(query) {
   var ancestor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
@@ -103,7 +105,7 @@ var assign = Object.assign != null ? Object.assign.bind(Object) : function (tgt)
 
 
 //var d3 = require('d3');
-var cxtmenu =  function cxtmenu(params) {
+var cxtmenu = function cxtmenu(params, element) {
   
     // assign : it seems like code set params as options if variable is given, otherwise sets defaults.
   var options = assign({}, defaults, params);
@@ -113,7 +115,7 @@ var cxtmenu =  function cxtmenu(params) {
   // in the html, cxtmenu is exported and overrid cyptoscape, then this return cyptoscape
   // normarl this return global object, window object is global obj in browser
   var cy = this;
-  var container = this; // expect DOM obj 
+  var container = element; // expect DOM obj 
   // cy.container() : get the html DOM elemnt in which the graph is visualised. a null value is returned if the instance is headless.
   // var container = cy.container();
   var target = void 0;
@@ -121,23 +123,33 @@ var cxtmenu =  function cxtmenu(params) {
   var data = {
     options: options,
     handlers: [],
-    container: createElement({ class: 'cxtmenu' }) // create class 
+    container:function() { return createElement({ class: 'cxtmenu' }) }// create class 
+    //container: 
   };
+  var tags = {
+    wrapper:'cxtmenu',
+    parent:'div',
+    canvas:'canvas'
+  }
 
-  var wrapper = data.container;
-  var parent = createElement();
-  var canvas = createElement({ tag: 'canvas' });
-  var svg = createElement({tag:'svg'});
+  var wrapper = container.insert(data.container,':first-child');
+  //var parent = createElement(); // create div tag
+  var parent = wrapper.append('div');
+  //var canvas = createElement({ tag: 'canvas' });  // create canvas
+  var canvas = parent.append('canvas');  // or svg
   var commands = [];
-  var c2d = canvas.getContext('2d');
+  var c2d = canvas.node().getContext('2d');
   var r = options.menuRadius;
   var containerSize = (r + options.activePadding) * 2;
   var activeCommandI = void 0;
   var offset = void 0;
 
-  container.insertBefore(wrapper, container.firstChild);
-  wrapper.appendChild(parent);
-  parent.appendChild(canvas);
+  console.log(container);
+  console.log(this); // undefind
+  console.log(wrapper); // .cxtmenu 
+
+  //container.insertBefore(wrapper, container.firstChild);
+  //wrapper.appendChild(parent);
 
   setStyles(wrapper, {
     position: 'absolute',
@@ -148,7 +160,7 @@ var cxtmenu =  function cxtmenu(params) {
 
   // prevent events on menu in legacy browsers
   ['mousedown', 'mousemove', 'mouseup', 'contextmenu'].forEach(function (evt) {
-    wrapper.addEventListener(evt, function (e) {
+    wrapper.on(evt, function (e) {
       e.preventDefault();
 
       return false;
@@ -233,6 +245,8 @@ var cxtmenu =  function cxtmenu(params) {
     redrawQueue.drawBg = [rspotlight];
   }
 
+
+  // alter c2d with canvas.node.getContext("2d") 
   function drawBg(rspotlight) {
     rspotlight = rspotlight !== undefined ? rspotlight : rs;
     // c2d = createElement({ tag: 'canvas' }).getContext('2d')
@@ -1080,7 +1094,8 @@ function mousedown() {　
 
   restart();
   console.log(this);
-  cxtmenu();
+  console.log(cxtmenu({},svg).container);
+  
 }
 
 function mousemove() {
