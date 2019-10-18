@@ -428,6 +428,7 @@ var cxtmenu = function cxtmenu(params, element) {
         fn: _fn
       });
 
+      // alter to svg
       if (selector === 'core') {
         cy.on(events, _fn);
       } else {
@@ -770,7 +771,7 @@ const wait = (sec) => {
   });
 };
 
-async function main() {
+async function checknodes() {
   try {
     await wait(10); // ここで10秒間止まります
     console.log(nodes)
@@ -781,7 +782,7 @@ async function main() {
   }
 }
 
-main();
+mchecknodes();
 
 
 
@@ -810,6 +811,8 @@ const svg = d3.select('body')
       var cy = this; // return whole html tags
       return cy
     };
+    console.log(cxt());
+    console.log('contextmenu!');
 
   })  // definition contextmenu = right click event
   .attr('width', width)
