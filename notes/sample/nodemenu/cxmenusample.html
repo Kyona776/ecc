@@ -87,7 +87,7 @@ function contextMenu() {
     
     menu.items = function(e) {
         if (!arguments.length) return items;
-        for (i in arguments) items.push(arguments[i]);
+        for (i in arguments) {items.push(arguments[i])};
         rescale = true;
         return menu;
     }
